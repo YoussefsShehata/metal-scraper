@@ -1,11 +1,19 @@
 @echo off
-echo 🔧 Activating Python virtual environment...
-call metal-scraper\venv\Scripts\activate
+REM ─── Make sure we’re in the folder where this .bat lives ───
+cd /d "%~dp0"
 
-echo 🚀 Starting FastAPI backend (minimized)...
-start "FastAPI Server" /min cmd /k "cd /d %CD%\metal-scraper && uvicorn fastapi_server:app --reload"
+echo 🔧 Activating Python virtual environment…
+call "venv\Scripts\activate.bat"
+
+echo 🚀 Starting FastAPI backend (minimized)…
+start "FastAPI Server" /min cmd /k ^
+  "call \"%~dp0venv\Scripts\activate.bat\" && ^
+   cd /d \"%~dp0app\" && ^
+   python -m uvicorn app.fastapi_server:app --reload"
 
 timeout /t 2 >nul
 
-echo 🌐 Starting React frontend (minimized)...
-start "React App" /min cmd /k "cd /d %CD%\metal-scraper-frontend && npm start"
+echo 🌐 Starting React frontend (minimized)…
+start "React App" /min cmd /k ^
+  "cd /d \"%~dp0metal-scraper-frontend\" && ^
+   npm start"

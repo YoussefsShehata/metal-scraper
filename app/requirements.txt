@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pandas
+selenium
+undetected-chromedriver
+beautifulsoup4
